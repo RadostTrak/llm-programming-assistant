@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 ## First generate an outline, then build a tutorial on markdown
 
+# Define the output structure for the tutorial generator
 class Tutorial(BaseModel):
     outline: str
     tutorial: str
