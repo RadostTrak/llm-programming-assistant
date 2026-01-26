@@ -11,5 +11,5 @@ triage_agent = Agent(
         'Once you have enough information to diagnose the student\'s issue, hand off to the diagnostic agent with the information collected.'
         'If the diagnostic agent hands back to you for more information, continue collecting information from the student until you have enough to diagnose the issue.'
     ),
-    handoffs=[diagnostic_agent]
+    handoffs=[]
 )

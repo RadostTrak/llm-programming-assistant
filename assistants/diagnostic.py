@@ -28,5 +28,5 @@ diagnostic_agent = Agent(
         'or if you are unable to diagnose the problem or make a good plan and ask the triage agent for more information multiple times.'
         'If socratic agent reports signs of frustration from the student, escalate and end the conversation politely.'
     ),
-    handoffs=[triage_agent, socratic_agent]
+    handoffs=[]
 )
