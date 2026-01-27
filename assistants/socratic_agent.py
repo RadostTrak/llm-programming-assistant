@@ -5,18 +5,14 @@ from state import DebuggingState
 
 
 @function_tool
-def update_socratic_findings(ctx: RunContextWrapper[dict], question: str, response: str, outcome: str):
+def update_socratic_findings(ctx: RunContextWrapper[dict], finding: str):
     """
-    Socratic agent to records each interaction with student.
+    Socratic agent updates running summary of interactions with student.
     """
     state: DebuggingState = ctx.context["state"]
     state.current_phase = 'questioning'
-    state.socratic_attempted_solutions.append({
-        'question': question,
-        'response': response,
-        'outcome': outcome
-    })
-    return f"Attempt recorded. Total: {len(state.socratic_attempted_solutions)}"
+    state.socratic_findings = finding
+    return f"Recorded progress: {finding[:100]}..."
 
 
 @function_tool
@@ -32,7 +28,7 @@ SOCRATIC_INSTRUCTIONS = (
 
     "IMPORTANT TOOLING RULES (follow these EVERY turn):\n"
     "1) ALWAYS call get_debugging_context() at the START to see the diagnostic plan and student progress.\n"
-    "2) After student responds, ALWAYS call record_socratic_attempt(question='...', student_response='...', outcome='...') to track progress.\n"
+    "2) After student responds, ALWAYS call update_socratic_findings to keep track of a summary of the conversation so far.\n"
     "3) If handing back to diagnostic, ALWAYS call socratic_feedback_history(feedback='...') first.\n"
     "4) NEVER write code or give direct solutions.\n\n"
 
@@ -45,11 +41,11 @@ SOCRATIC_INSTRUCTIONS = (
     
     "When to hand back to diagnostic:\n"
     "IF you're stuck in loops (asking same concept 3+ times with no progress):\n"
-    "  → Call socratic_feedback_history(feedback='Looping on [concept]. Student responses: [summary].')\n"
+    "  → After recording your finding, call add_feedback_for_diagnostic(feedback='Looping on [concept].')\n"
     "  → Call transfer_to_diagnostic(reason='Plan not effective, provided feedback')\n\n"
     
     "IF student shows signs of frustration:\n"
-    "  → Call socratic_feedback_history(feedback='Student frustrated. Quote: [their words]. May need simpler approach or different angle.')\n"
+    "  → After recording your finding, call add_feedback_for_diagnostic(feedback='Student frustrated. Quote: [their words]. May need simpler approach or different angle.')\n"
     "  → Call transfer_to_diagnostic(reason='Student showing frustration')\n\n"    
 )
 

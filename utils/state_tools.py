@@ -16,14 +16,10 @@ def get_debugging_context(ctx: RunContextWrapper[dict]):
             'context': state.exercise_context
         },
 
-        # Issue
-        'issue': state.issue_description,
-        'code_context': state.code_context,
-
         # Agent work
         'triage_findings': state.triage_findings,
         'diagnostic_plan': state.diagnostic_plan,
-        'socratic_attempts': state.record_socratic_attempt,
+        'socratic_findings': state.socratic_findings,
         'socratic_feedback': state.socratic_feedback_history,
 
         # Progress

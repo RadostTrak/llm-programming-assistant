@@ -20,16 +20,12 @@ class DebuggingState:
     exercise_title: Optional[str] = None
     exercise_prompt: Optional[str] = None
     exercise_context: Optional[str] = None 
-
-    # Core debugging info
-    issue_description: Optional[str] = None # User's description of the issue
-    code_context: Dict[str, str] = field(default_factory=dict) # User-provided code snippets
     
     # Agent findings
-    triage_findings: Optional[str] = None # Store triage agent findings
+    triage_findings: Optional[str] = None # Summarised interactions with user
     diagnostic_plan: Optional[str] = None # Step-by-step plan from diagnostic agent
-    record_socratic_attempt: List[Dict] = field(default_factory=list) # Track what solutions were attempted
-    socratic_feedback_history: List[str] = field(default_factory=list) # Feedback from socratic to diagnostic when handing off
+    socratic_findings: Optional[str] = None # Summarised interactions with user
+    socratic_feedback_history: List[str] = field(default_factory=list) # Summarised feedback from socratic to diagnostic when handing off
     
     # Progress tracking
     current_phase: str = Phase.INITIAL.value # Current phase of debugging
