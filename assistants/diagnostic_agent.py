@@ -1,4 +1,16 @@
-from agents import Agent
+from agents import Agent, RunContextWrapper, function_tool
+from state import DebuggingState
+
+@function_tool
+def update_diagnostic_findings(ctx: RunContextWrapper[dict], finding: str):
+    """
+    Tool for the diagnostic agent to record its findings.
+    """
+    state: DebuggingState = ctx.context["state"]
+    state.diagnostic_findings['diagnostic'] = finding
+    state.current_phase = 'diagnosing'
+    return f"Recorded finding: {finding}"
+
 
 diagnostic_agent = Agent(
     name='Diagnostic Agent',

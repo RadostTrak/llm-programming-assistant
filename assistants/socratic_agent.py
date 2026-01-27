@@ -1,4 +1,16 @@
-from agents import Agent
+from agents import Agent, RunContextWrapper, function_tool
+from state import DebuggingState
+
+@function_tool
+def update_socratic_findings(ctx: RunContextWrapper[dict], finding: str):
+    """
+    Tool for the socratic agent to record its findings.
+    """
+    state: DebuggingState = ctx.context["state"]
+    state.diagnostic_findings['socratic'] = finding
+    state.current_phase = 'questioning'
+    return f"Recorded finding: {finding}"
+
 
 socratic_agent = Agent(
     name='Socratic Agent',

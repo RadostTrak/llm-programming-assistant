@@ -3,3 +3,4 @@ output.ipynb
 test_run.py
 test.py
 schemas/
+__pycache__/

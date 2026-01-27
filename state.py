@@ -6,8 +6,8 @@ class Phase(Enum):
     INITIAL = 'initial'
     TRIAGING = 'triaging'
     DIAGNOSING = 'diagnosing'
-    PROPOSING = 'proposing'
-    TESTING = 'testing'
+    QUESTIONING = 'questioning'
+    ESCALATED = 'escalated'
     RESOLVED = 'resolved'
 
 @dataclass
@@ -15,7 +15,7 @@ class DebuggingState:
     """Shared state for multi-agent debugging system"""
     
     # Core debugging info
-    issue_description: Optional[str] = None # User's description of the issue
+    issue_description: Optional[str] = None # User's description of the issue (optional)
     code_context: Dict[str, str] = field(default_factory=dict) # User-provided code snippets
     
     # Agent findings

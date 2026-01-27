@@ -1,27 +1,28 @@
 from state import DebuggingState
-from assistants.triage_agent import triage_agent
+from assistants import triage_agent, diagnostic_agent
 from agents import Runner
 import asyncio
 
 # Initialize state
 state = DebuggingState()
 
-# Set prompt
-prompt = 'I am having trouble with my code.'
+loop = 0
 
-
-async def main():
-    input_prompt = prompt
-    triage_result = await Runner.run(
+while loop <= 2:
+    async def main():
+        input_prompt = input(f'Request {loop}\n> ')
+        triage_result = await Runner.run(
         starting_agent=triage_agent, 
         input=[
             {"role": "user", "content": input_prompt}
         ],
         context={'state': state}
         )
-    print("Triage Agent Result:", triage_result)
-    print("Current State:", state)
-    print("State:", state.diagnostic_findings)
+        print("Next question:", triage_result.final_output)
+        print("Triage Agent Result:", triage_result)
+        print("Current State:", state)
+    asyncio.run(main())
+    loop += 1
 
 
-asyncio.run(main())
+print("Final State:", state)
