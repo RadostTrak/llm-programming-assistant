@@ -8,10 +8,25 @@ def get_debugging_context(ctx: RunContextWrapper[dict]):
     """
     state: DebuggingState = ctx.context["state"]
     return {
+        'exercise': {
+            'broad_context': state.broad_context,
+            'id': state.exercise_id,
+            'title': state.exercise_title,
+            'prompt': state.exercise_prompt,
+            'context': state.exercise_context
+        },
+
+        # Issue
         'issue': state.issue_description,
         'code_context': state.code_context,
-        'previous_findings': state.diagnostic_findings,
-        'attempted_solutions': state.attempted_solutions,
+
+        # Agent work
+        'triage_findings': state.triage_findings,
+        'diagnostic_plan': state.diagnostic_plan,
+        'socratic_attempts': state.record_socratic_attempt,
+        'socratic_feedback': state.socratic_feedback_history,
+
+        # Progress
         'current_phase': state.current_phase,
-        'handoff_history': state.handoff_history
+        'handoff_history': state.handoff_history,
     }

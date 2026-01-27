@@ -14,17 +14,26 @@ class Phase(Enum):
 class DebuggingState:
     """Shared state for multi-agent debugging system"""
     
+    # Exercise context
+    broad_context: Optional[str] = None
+    exercise_id: Optional[str] = None
+    exercise_title: Optional[str] = None
+    exercise_prompt: Optional[str] = None
+    exercise_context: Optional[str] = None 
+
     # Core debugging info
-    issue_description: Optional[str] = None # User's description of the issue (optional)
+    issue_description: Optional[str] = None # User's description of the issue
     code_context: Dict[str, str] = field(default_factory=dict) # User-provided code snippets
     
     # Agent findings
-    diagnostic_findings: Dict[str, str] = field(default_factory=dict) # Stores what each agent discovered
-    attempted_solutions: List[Dict] = field(default_factory=list) # Track what solutions were attempted
+    triage_findings: Optional[str] = None # Store triage agent findings
+    diagnostic_plan: Optional[str] = None # Step-by-step plan from diagnostic agent
+    record_socratic_attempt: List[Dict] = field(default_factory=list) # Track what solutions were attempted
+    socratic_feedback_history: List[str] = field(default_factory=list) # Feedback from socratic to diagnostic when handing off
     
     # Progress tracking
     current_phase: str = Phase.INITIAL.value # Current phase of debugging
-    conversation_history: List[Dict] = field(default_factory=list) # Chat history between user and agents, Example: [{"role": "user", "message": "My code crashes"}, {"role": "agent", "message": "Can you share the error?"}]
+    conversation_history: List[Dict] = field(default_factory=list) # Chat history between user and agents
     
     # Handoff tracking
     handoff_history: List[Dict] = field(default_factory=list)
