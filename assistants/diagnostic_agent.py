@@ -1,5 +1,3 @@
-from assistants.triage_agent import triage_agent
-from assistants.socratic_agent import socratic_agent
 from agents import Agent, RunContextWrapper, function_tool
 from utils.handoff import create_handoff_function
 from utils.state_tools import get_debugging_context
@@ -57,9 +55,6 @@ diagnostic_agent = Agent(
     instructions=DIAGNOSTIC_INSTRUCTIONS,
     tools=[
         get_debugging_context,
-        update_diagnostic_findings,
-        # Automatically record handoffs when called
-        create_handoff_function('diagnostic', triage_agent),
-        create_handoff_function('diagnostic', socratic_agent)
+        update_diagnostic_plan
     ]
 )

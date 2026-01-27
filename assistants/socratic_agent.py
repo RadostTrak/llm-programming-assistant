@@ -1,4 +1,3 @@
-from assistants.diagnostic_agent import diagnostic_agent
 from agents import Agent, RunContextWrapper, function_tool
 from utils.handoff import create_handoff_function
 from utils.state_tools import get_debugging_context
@@ -63,7 +62,6 @@ socratic_agent = Agent(
     tools=[
         get_debugging_context,
         update_socratic_findings,
-        add_feedback_for_diagnostic,
-        create_handoff_function('socratic', diagnostic_agent)
+        add_feedback_for_diagnostic
     ]
 )

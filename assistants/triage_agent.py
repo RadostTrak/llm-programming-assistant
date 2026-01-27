@@ -1,4 +1,3 @@
-from assistants.diagnostic_agent import diagnostic_agent
 from agents import Agent, RunContextWrapper, function_tool
 from utils.handoff import create_handoff_function
 from utils.state_tools import get_debugging_context
@@ -23,12 +22,12 @@ TRIAGE_INSTRUCTIONS = (
     "1) ALWAYS call get_debugging_context() at the START of every turn to see what you already know.\n"
     "2) ALWAYS call update_triage_findings(finding='...') at the END of every turn with a summary of:\n"
     "   - What information you've collected so far\n"
-    "   - What is still missing or unclear\n""
+    "   - What is still missing or unclear\n"
     "3) NEVER provide code, solutions, or debugging steps.\n\n"
     "Ask brief, targeted questions which is directly relevant to the student's input and what is missing. "
     "After the student responds, update your findings with what you learned. "
     "The finding must summarize what you know so far AND list what is still missing.\n\n"
-    "After a maximum of 3 questions or when you have enough information, "
+    "After a maximum of 2 questions or when you have enough information, "
     "call transfer_to_diagnostic(reason='Collected: [brief summary]. Ready for diagnosis.'). "
     "You are solely collecting information through short questions, do not attempt to diagnose the problem."
 )
@@ -40,8 +39,6 @@ triage_agent = Agent(
     instructions=TRIAGE_INSTRUCTIONS,
     tools=[
         get_debugging_context,
-        update_triage_findings,
-        # Automatically record handoffs when called
-        create_handoff_function('triage', diagnostic_agent)
+        update_triage_findings
     ]
 )
