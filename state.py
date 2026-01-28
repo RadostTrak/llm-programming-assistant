@@ -29,7 +29,6 @@ class DebuggingState:
     
     # Progress tracking
     current_phase: str = Phase.INITIAL.value # Current phase of debugging
-    conversation_history: List[Dict] = field(default_factory=list) # Chat history between user and agents
     
     # Handoff tracking
     handoff_history: List[Dict] = field(default_factory=list)

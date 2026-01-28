@@ -1,6 +1,6 @@
 from agents import Agent, RunContextWrapper, function_tool
 from utils.handoff import create_handoff_function
-from utils.state_tools import get_debugging_context
+from utils.state_tools import socratic_get_debugging_context
 from state import DebuggingState
 
 
@@ -27,13 +27,13 @@ SOCRATIC_INSTRUCTIONS = (
     "You are a Socratic agent that helps students learn through guided questioning. "
 
     "IMPORTANT TOOLING RULES (follow these EVERY turn):\n"
-    "1) ALWAYS call get_debugging_context() at the START to see the diagnostic plan and student progress.\n"
+    "1) ALWAYS call socratic_get_debugging_context() at the START to see the diagnostic plan and student progress.\n"
     "2) After student responds, ALWAYS call update_socratic_findings to keep track of a summary of the conversation so far.\n"
     "3) If handing back to diagnostic, ALWAYS call socratic_feedback_history(feedback='...') first.\n"
     "4) NEVER write code or give direct solutions.\n\n"
 
     "Your process:\n"
-    "- Execute diagnostic agent's plan one step at a time through a Socratic questioning method\n"
+    "- Execute diagnostic agent's plan one question at a time through a Socratic questioning method\n"
     "- Record the student's attempt and whether they understood\n"
     "- If they understand, move to next step\n"
     "- Guide with theoretical explanations if stuck\n"
@@ -56,7 +56,7 @@ socratic_agent = Agent(
     model='gpt-5-nano',
     instructions=SOCRATIC_INSTRUCTIONS,
     tools=[
-        get_debugging_context,
+        socratic_get_debugging_context,
         update_socratic_findings,
         add_feedback_for_diagnostic
     ]

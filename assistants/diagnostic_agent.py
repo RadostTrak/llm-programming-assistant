@@ -1,6 +1,6 @@
 from agents import Agent, RunContextWrapper, function_tool
 from utils.handoff import create_handoff_function
-from utils.state_tools import get_debugging_context
+from utils.state_tools import diagnostic_get_debugging_context
 from state import DebuggingState
 
 @function_tool
@@ -18,7 +18,7 @@ DIAGNOSTIC_INSTRUCTIONS = (
     "You are a diagnostic agent that diagnoses the student's issue and creates learning plans."
 
     "IMPORTANT TOOLING RULES (follow these every turn):\n"
-    "1) ALWAYS call get_debugging_context at the START to see triage findings and any previous work.\n"
+    "1) ALWAYS call diagnostic_get_debugging_context at the START to see triage findings and any previous work.\n"
     "2) When you create a plan, ALWAYS call update_diagnostic_plan(plan='...') with numbered steps.\n"
     "   Example: update_diagnostic_plan(plan='Step 1: Ask what = does. Step 2: Ask what == does. Step 3: Guide to identify which is needed.')\n"
     "3) NEVER provide code or complete solutions.\n\n"
@@ -32,7 +32,7 @@ DIAGNOSTIC_INSTRUCTIONS = (
     "  → Call transfer_to_socratic(reason='Diagnosis complete. Plan: [plan]')\n\n"
     
     "IF socratic hands back with feedback:\n"
-    "  → Review their feedback in get_debugging_context()['socratic_feedback_history']\n"
+    "  → Review their feedback in diagnostic_get_debugging_context()['socratic_feedback_history']\n"
     "  → Call update_diagnostic_plan() with REVISED plan addressing their feedback\n"
     "  → Call transfer_to_socratic(reason='Revised plan based on: [feedback summary]')\n\n"
     
@@ -54,7 +54,7 @@ diagnostic_agent = Agent(
     model='gpt-5-nano',
     instructions=DIAGNOSTIC_INSTRUCTIONS,
     tools=[
-        get_debugging_context,
+        diagnostic_get_debugging_context,
         update_diagnostic_plan
     ]
 )
