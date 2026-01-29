@@ -1,4 +1,4 @@
-from agents import Agent, RunContextWrapper, function_tool
+from agents import Agent, RunContextWrapper, function_tool, ModelSettings
 from utils.handoff import create_handoff_function
 from utils.state_tools import socratic_get_debugging_context
 from state import DebuggingState
@@ -59,5 +59,6 @@ socratic_agent = Agent(
         socratic_get_debugging_context,
         update_socratic_findings,
         add_feedback_for_diagnostic
-    ]
+    ],
+    model_settings=ModelSettings(tool_choice='required')
 )

@@ -45,7 +45,6 @@ DIAGNOSTIC_INSTRUCTIONS = (
     "- Each step should be one question for socratic to ask\n"
     "- Focus on concept understanding\n"
     "- Build from student's current understanding"
-
 )
 
 

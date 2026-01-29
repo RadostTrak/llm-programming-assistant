@@ -1,4 +1,4 @@
-from agents import Agent, RunContextWrapper, function_tool
+from agents import Agent, RunContextWrapper, function_tool, ModelSettings
 from utils.handoff import create_handoff_function
 from utils.state_tools import triage_get_debugging_context
 from state import DebuggingState
@@ -40,5 +40,6 @@ triage_agent = Agent(
     tools=[
         triage_get_debugging_context,
         update_triage_findings
-    ]
+    ],
+    model_settings=ModelSettings(tool_choice='required')
 )
