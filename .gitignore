@@ -5,3 +5,5 @@ test.py
 schemas/
 __pycache__/
 discarded/
+problemset.yaml
+testing_session.json
