@@ -1,4 +1,5 @@
 import json
+import yaml
 from dataclasses import dataclass, field, asdict
 from typing import List, Dict, Optional
 from enum import Enum
@@ -55,15 +56,3 @@ class DebuggingState:
     def from_dict(cls, data: dict):
         """Create state from dictionary"""
         return cls(**{k: v for k, v in data.items() if k in cls.__annotations__})
-    
-    def save_to_json(self, filepath: str):
-        """Save state to JSON file"""
-        with open(filepath, 'w') as f:
-            json.dump(self.to_dict(), f, indent=2)
-    
-    @classmethod
-    def load_from_json(cls, filepath: str) -> 'DebuggingState':
-        """Load state from JSON file"""
-        with open(filepath, 'r') as f:
-            data = json.load(f)
-        return cls.from_dict(data)

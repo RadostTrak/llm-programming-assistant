@@ -7,3 +7,4 @@ __pycache__/
 discarded/
 problemset.yaml
 testing_session.json
+debugging_state.json
