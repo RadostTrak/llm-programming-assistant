@@ -6,5 +6,8 @@ schemas/
 __pycache__/
 discarded/
 problemset.yaml
+problemset2.yaml
 testing_session.json
 debugging_state.json
+starting_state.json
+saved_state.json

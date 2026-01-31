@@ -1,17 +1,22 @@
 import json
+import asyncio
+import agents_setup
 from state import DebuggingState
 from assistants.triage_agent import triage_agent
 from assistants.diagnostic_agent import diagnostic_agent
 from agents import Runner
-import asyncio
-import agents_setup
+from utils.file_utils import load_exercise_from_yaml
+from utils.file_utils import save_state_to_json
 
-# Initialize state
+
+
+# Initialize state and load exercise description
 state = DebuggingState()
+state = load_exercise_from_yaml("problemset2.yaml", "1.1")
 
 async def main():
     loop = 0
-    while loop <= 1:
+    while loop <= 3:
         input_prompt = input(f'Request {loop}\n> ')
         
         triage_result = await Runner.run(
@@ -21,9 +26,9 @@ async def main():
         )
 
         print("Triage Agent Result:", triage_result)
-        print("Current State:", state)
+        print("Current State:", state.triage_findings, state.handoff_history)
         loop += 1
 
 asyncio.run(main())
 
-state.save_to_json('testing_session.json')
+save_state_to_json(state, 'testing_session.json')
