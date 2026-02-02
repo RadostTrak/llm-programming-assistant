@@ -1,5 +1,3 @@
-import json
-import yaml
 from dataclasses import dataclass, field, asdict
 from typing import List, Dict, Optional
 from enum import Enum
@@ -24,13 +22,14 @@ class DebuggingState:
     exercise_context: Optional[str] = None 
     
     # Agent findings
-    triage_findings: Optional[str] = None # Summarised interactions with user
+    triage_findings: List[Dict] = field(default_factory=list) # Summarised interactions with user, append each turn
     diagnostic_plan: Optional[str] = None # Step-by-step plan from diagnostic agent
     socratic_findings: Optional[str] = None # Summarised interactions with user
     socratic_feedback_history: List[str] = field(default_factory=list) # Summarised feedback from socratic to diagnostic when handing off
     
     # Progress tracking
     current_phase: str = Phase.INITIAL.value # Current phase of debugging
+    current_turn: int = 1
     
     # Handoff tracking
     handoff_history: List[Dict] = field(default_factory=list)

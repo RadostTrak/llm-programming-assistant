@@ -19,7 +19,8 @@ def triage_get_debugging_context(ctx: RunContextWrapper[dict]):
         },
 
         'triage_findings': state.triage_findings,
-        'handoff_history': state.handoff_history,
+        'current_turn': state.current_turn,
+        'handoff_history': state.handoff_history
     }
 
 
@@ -45,7 +46,8 @@ def diagnostic_get_debugging_context(ctx: RunContextWrapper[dict]):
         'socratic_feedback': state.socratic_feedback_history,
 
         'current_phase': state.current_phase,
-        'handoff_history': state.handoff_history,
+        'current_turn': state.current_turn,
+        'handoff_history': state.handoff_history
     }
 
 
@@ -60,5 +62,5 @@ def socratic_get_debugging_context(ctx: RunContextWrapper[dict]):
     return {
         'diagnostic_plan': state.diagnostic_plan,
         'socratic_findings': state.socratic_findings,
-        'socratic_feedback': state.socratic_feedback_history,
+        'socratic_feedback': state.socratic_feedback_history
     }
