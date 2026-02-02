@@ -8,15 +8,13 @@ from agents import Runner
 from utils.file_utils import load_exercise_from_yaml
 from utils.file_utils import save_state_to_json
 
-
-
 # Initialize state and load exercise description
 state = DebuggingState()
 state = load_exercise_from_yaml("problemset2.yaml", "1.1")
 
 async def main():
-    loop = 0
-    while loop <= 3:
+    loop = 1
+    while loop <= 4:
         input_prompt = input(f'Request {loop}\n> ')
         
         triage_result = await Runner.run(
