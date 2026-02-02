@@ -1,5 +1,4 @@
-from agents import Agent, RunContextWrapper, function_tool
-from utils.handoff import create_handoff_function
+from agents import Agent, RunContextWrapper, function_tool, ModelSettings
 from utils.state_tools import diagnostic_get_debugging_context
 from state import DebuggingState
 
@@ -49,11 +48,13 @@ DIAGNOSTIC_INSTRUCTIONS = (
 
 
 diagnostic_agent = Agent(
-    name='Diagnostic Agent',
+    name='diagnostic',
     model='gpt-5-nano',
     instructions=DIAGNOSTIC_INSTRUCTIONS,
     tools=[
         diagnostic_get_debugging_context,
         update_diagnostic_plan
-    ]
+    ],
+    handoffs=[],
+    model_settings=ModelSettings(tool_choice='required')
 )

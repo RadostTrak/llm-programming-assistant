@@ -1,5 +1,4 @@
 from agents import Agent, RunContextWrapper, function_tool, ModelSettings
-from utils.handoff import create_handoff_function
 from utils.state_tools import socratic_get_debugging_context
 from state import DebuggingState
 
@@ -51,8 +50,7 @@ SOCRATIC_INSTRUCTIONS = (
 
 
 socratic_agent = Agent(
-    name='Socratic Agent',
-    # give feedback for diagnostic agent when handing off
+    name='socratic',
     model='gpt-5-nano',
     instructions=SOCRATIC_INSTRUCTIONS,
     tools=[
@@ -60,5 +58,6 @@ socratic_agent = Agent(
         update_socratic_findings,
         add_feedback_for_diagnostic
     ],
+    handoffs=[],
     model_settings=ModelSettings(tool_choice='required')
 )

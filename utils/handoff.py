@@ -1,13 +1,13 @@
-from agents import Agent, RunContextWrapper, Agent, function_tool
+from agents import Agent, RunContextWrapper, function_tool
 from state import DebuggingState
 
-def create_handoff_function(from_agent_name: str, to_agent: Agent):
+
+def create_record_handoff_function(from_agent_name: str, to_agent: Agent):
     """
-    Factory function that creates handoff functions that automatically record to state.
+    Factory function that creates record handoff functions that record to state.
     """
     
-    @function_tool
-    def handoff_function(ctx: RunContextWrapper[dict], reason: str):
+    def record_handoff(ctx: RunContextWrapper[dict], reason: str):
         state: DebuggingState = ctx.context["state"]
         state.record_handoff(
             from_agent=from_agent_name,
@@ -15,7 +15,9 @@ def create_handoff_function(from_agent_name: str, to_agent: Agent):
             reason=reason
         )
         
-        return to_agent
+        return None
     
-    handoff_function.__name__ = f"transfer_to_{to_agent.name}"
-    return handoff_function
+    record_handoff.__name__ = f"transfer_to_{to_agent.name}"
+    record_handoff.__doc__ = f"Transfer conversation to {to_agent.name} agent. Provide a reason for the transfer."
+    
+    return function_tool(record_handoff)

@@ -1,5 +1,6 @@
 from agents import Agent, RunContextWrapper, function_tool, ModelSettings
 from utils.state_tools import triage_get_debugging_context
+from assistants import diagnostic_agent
 from utils.guardrails import code_detection_guardrail
 from state import DebuggingState
 
@@ -45,14 +46,14 @@ TRIAGE_INSTRUCTIONS = (
     "   - Example: 'Turn 2: Student tried input(width), got NameError about width being undefined'\n"
     "   Do NOT repeat previous findings, just state what you learned.\n"
     "DO NOT include anything in the exercise description in the finding.\n"
-    "3) At the end of the turn, IF any of the following are true, then hand off by calling transfer_to_diagnostic(reason='Student tried [X], got [specific error or behavior]'): \n"
+    "3) At the end of the turn, IF any of the following are true, then call transfer_to_diagnostic(reason='Student tried [X], got [specific error or behavior]') and hand off to diagnostic_agent: \n"
     "   - You have both what the student tried (code or description) AND what went wrong (error message or specific unexpected behavior)\n"
-    "   - The current_turn >= 4\n\n"    
+    "   - The current_turn >= 4\n\n"
 )
 
 
 triage_agent = Agent(
-    name="Triage Agent",
+    name="triage",
     model="gpt-5-mini",
     instructions=TRIAGE_INSTRUCTIONS,
     tools=[
@@ -60,5 +61,6 @@ triage_agent = Agent(
         update_triage_findings
     ],
     model_settings=ModelSettings(tool_choice='required'),
+    handoffs=[],
     output_guardrails=[code_detection_guardrail]
 )
