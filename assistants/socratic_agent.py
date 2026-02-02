@@ -12,7 +12,7 @@ def update_socratic_findings(ctx: RunContextWrapper[dict], finding: str):
     state: DebuggingState = ctx.context["state"]
     state.current_phase = 'questioning'
     state.socratic_findings = finding
-    return f"Recorded progress: {finding[:100]}..."
+    return "Progress recorded."
 
 
 @function_tool
@@ -20,7 +20,7 @@ def add_feedback_for_diagnostic(ctx: RunContextWrapper[dict], feedback: str):
     """Socratic gives feedback when handing back to diagnostic"""
     state: DebuggingState = ctx.context["state"]
     state.socratic_feedback_history.append(feedback)
-    return f"Feedback recorded"
+    return "Feedback recorded."
 
 
 SOCRATIC_INSTRUCTIONS = (

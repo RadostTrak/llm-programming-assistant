@@ -11,7 +11,7 @@ def update_diagnostic_plan(ctx: RunContextWrapper[dict], plan: str):
     state: DebuggingState = ctx.context["state"]
     state.current_phase = 'diagnosing'
     state.diagnostic_plan = plan
-    return f"Plan saved: {plan[:100]}..."
+    return "Plan recorded."
 
 
 DIAGNOSTIC_INSTRUCTIONS = (
