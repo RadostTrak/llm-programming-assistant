@@ -1,14 +1,6 @@
 .DS_Store
-output.ipynb
-test_run.py
-test.py
-schemas/
 __pycache__/
 discarded/
+test_stuff/
 problemset.yaml
 problemset2.yaml
-testing_session.json
-debugging_state.json
-starting_state.json
-saved_state.json
-test_handoff.py
