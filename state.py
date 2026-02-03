@@ -22,9 +22,9 @@ class DebuggingState:
     exercise_context: Optional[str] = None 
     
     # Agent findings
-    triage_findings: List[Dict] = field(default_factory=list) # Summarised interactions with user, append each turn
+    triage_findings: List[Dict] = field(default_factory=list) # Summarised interactions with user
     diagnostic_plan: Optional[str] = None # Step-by-step plan from diagnostic agent
-    socratic_findings: Optional[str] = None # Summarised interactions with user
+    socratic_findings: List[Dict] = field(default_factory=list) # Summarised interactions with user
     socratic_feedback_history: List[str] = field(default_factory=list) # Summarised feedback from socratic to diagnostic when handing off
     
     # Progress tracking

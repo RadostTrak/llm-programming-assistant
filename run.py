@@ -2,8 +2,7 @@ import json
 import asyncio
 import agents_setup
 from state import DebuggingState
-from assistants.triage_agent import triage_agent
-from assistants.diagnostic_agent import diagnostic_agent
+from assistants import triage_agent, diagnostic_agent, socratic_agent
 from agents import Runner
 from utils.file_utils import load_exercise_from_yaml
 from utils.file_utils import save_state_to_json
@@ -12,19 +11,29 @@ from utils.file_utils import save_state_to_json
 state = DebuggingState()
 state = load_exercise_from_yaml("problemset2.yaml", "1.1")
 
+# Track which agent is currently active
+current_agent = triage_agent
+
+
 async def main():
+    global current_agent
+
     loop = 1
-    while loop <= 4:
+    while loop <= 8:
         input_prompt = input(f'Request {loop}\n> ')
         
-        triage_result = await Runner.run(
-            starting_agent=triage_agent, 
+        result = await Runner.run(
+            starting_agent=current_agent, 
             input=[{"role": "user", "content": input_prompt}],
             context={'state': state}
         )
 
-        print("Triage Agent Result:", triage_result)
-        print("Current State:", state.triage_findings, state.handoff_history)
+        print("Agent Result:", result)
+        print("Current State:", state)
+
+        # Update current_agent
+        current_agent = result.last_agent
+
         loop += 1
 
 asyncio.run(main())
